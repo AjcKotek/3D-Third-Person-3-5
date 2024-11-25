@@ -14,9 +14,13 @@ public class PlayerControllerCharakterController : MonoBehaviour
     private static readonly int Hash_Jumped = Animator.StringToHash("Jumped");
     private static readonly int Hash_ActionTrigger = Animator.StringToHash("ActionTrigger");
     private static readonly int Hash_ActionId = Animator.StringToHash("ActionId");
-    
+
+    private static readonly int Hash_WeaponId = Animator.StringToHash("WeaponId");
+    private static readonly int Hash_WeaponEquipTriggerId = Animator.StringToHash("WeaponEquipTrigger");
+    private static readonly int Hash_WeaponUnequipTriggerId = Animator.StringToHash("WeaponUnequipTrigger");
+
     #region Inspector
-    
+
     [FormerlySerializedAs("movementSpeed")]
     [Header("Movement")]
     
@@ -330,6 +334,18 @@ public class PlayerControllerCharakterController : MonoBehaviour
     {
         animator.SetTrigger(Hash_ActionTrigger);
         animator.SetInteger(Hash_ActionId, id);
+    }
+
+    public void AnimationsWeaponEquip(int id)
+    {
+        animator.SetTrigger(Hash_WeaponEquipTriggerId);
+        animator.SetInteger(Hash_WeaponId, id);
+    }
+
+    public void AnimationsWeaponUnequip(int id)
+    {
+        animator.SetTrigger(Hash_WeaponUnequipTriggerId);
+        animator.SetInteger(Hash_WeaponId, id);
     }
 
     public void EndAction()
