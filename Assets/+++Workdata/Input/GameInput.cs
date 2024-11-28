@@ -69,7 +69,7 @@ namespace UnityEngine.InputSystem
                     ""name"": ""Crouch"",
                     ""type"": ""Button"",
                     ""id"": ""764b79a0-b459-48da-a2d9-f7d4166a6474"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
