@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -11,25 +13,33 @@ public class EnemyBehaviour : MonoBehaviour
     private static readonly int Hash_ActionId = Animator.StringToHash("ActionId");
 
     #region Inspector
+    [Header("Health")]
+    [SerializeField] private Image healthbar;
+    [SerializeField] int maxEnemyHealth;
+    [SerializeField] int currentEnemyHealth;
 
-    [SerializeField] int enemyHealth;
-    
     [Header("Animation")]
     [SerializeField] Animator animator;
 
-    [Header("AttackTypes")] 
+    [Header("AttackTypes")]
     [SerializeField] private int attackId;
     [SerializeField] private int attackDamage;
     [SerializeField] private float attackTime;
-    
+
     #endregion
-    
+
     #region Private Variables
 
     private float attackTimer;
     private bool canAttack;
-    
+
     #endregion
+
+    private void Awake()
+    {
+        currentEnemyHealth = maxEnemyHealth;
+        RefreshHealthBar();
+    }
 
     private void Update()
     {
@@ -59,12 +69,12 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void GetDamage(int damage)
     {
-        if (enemyHealth < 1) return;
-        
-        enemyHealth -= damage;
+        if (currentEnemyHealth < 1) return;
+
+        currentEnemyHealth -= damage;
 
         animator.SetTrigger(Hash_ActionTrigger);
-        if (enemyHealth < 1)
+        if (currentEnemyHealth < 1)
         {
             OnDeath();
         }
@@ -72,13 +82,22 @@ public class EnemyBehaviour : MonoBehaviour
         {
             OnHit();
         }
+
+        RefreshHealthBar();
     }
-    
+
+    void RefreshHealthBar()
+    {
+        //maxEnemyHealth
+        //currentEnemyHealth
+        healthbar.fillAmount = (float)currentEnemyHealth / (float)maxEnemyHealth;
+    }
+
     public void OnDeath()
     {
         animator.SetTrigger(Hash_Dead);
     }
-    
+
     public void OnHit()
     {
         animator.SetTrigger(Hash_Hit);
